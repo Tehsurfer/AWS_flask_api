@@ -39,8 +39,16 @@ def session():
 #     session_id = response['session_token']
 #     return json.dumps(response)
 
-@app.route('/api/get_timeseries_dataset_names', methods=['POST'])
+@app.route('/api/get_timeseries_dataset_names', methods=['POST','OPTIONS'])
 def sessionp():
+     if request.method == 'OPTIONS':
+        headers = {
+            'Access-Control-Allow-Origin': '*',
+            'Access-Control-Allow-Methods': 'POST, GET, OPTIONS',
+            'Access-Control-Max-Age': 2000,
+            'Access-Control-Allow-Headers': 'origin, x-csrftoken, content-type, accept',
+        }
+        return '', 200, headers
     # print(request.method)
     # print(request.headers)
     # print(request.data)
