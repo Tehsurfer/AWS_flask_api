@@ -1,4 +1,4 @@
 # AWS_flask_api
-An api to use access the blackfynn python client on an AWS server
+An api to use access the [blackfynn python client](https://github.com/Blackfynn/blackfynn-python) on an AWS server
 
-createed from  https://github.com/rmotr/flask-api-example 
+created from  https://github.com/rmotr/flask-api-example 
