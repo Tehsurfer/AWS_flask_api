@@ -4,7 +4,7 @@ from .utils import JSON_MIME_TYPE, search_book
 from .utils import json_response, JSON_MIME_TYPE
 from flask import request
 import requests
-from blackfynn import Blackfynn
+
 
 app = Flask(__name__)
 
@@ -41,13 +41,14 @@ def session():
 
 @app.route('/api/get_timeseries_dataset_names', methods=['POST'])
 def sessionp():
-    # print(request.method)
-    # print(request.headers)
-    # print(request.data)
-    # print('its a post!')
+    print(request.method)
+    print(request.headers)
+    print(request.data)
+    print('its a post!')
     data = json.loads(request.data.decode("utf-8"))
+    import blackfynn
     global bf
-    bf = Blackfynn(api_token=data['tokenId'], api_secret=data['secret'])
+    bf = blackfynn.Blackfynn(api_token=data['tokenId'], api_secret=data['secret'])
     data_sets = bf.datasets()
 
     global time_series_items
@@ -64,11 +65,11 @@ def sessionp():
 
 @app.route('/api/get_channel_data', methods=['GET'])
 def datasets():
-    # print(request.method)
-    # print(request.headers)
+    print(request.method)
+    print(request.headers)
     name = request.headers['Name']
     channel = request.headers['Channel']
-    # print(name)
+    print(name)
     global bf
     global time_series_items
     data = []
