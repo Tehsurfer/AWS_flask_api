@@ -3,14 +3,16 @@ from flask import Flask, Response, abort
 from .utils import JSON_MIME_TYPE, search_book
 from .utils import json_response, JSON_MIME_TYPE
 from flask import request
-import requests
+from flask_cors import CORS
+
 
 
 app = Flask(__name__)
+CORS(app)
 
 books = [{
     'id': 33,
-    'title': 'The Raven',
+    'title': 'The Check',
     'author_id': 1
 }]
 
@@ -39,16 +41,16 @@ def session():
 #     session_id = response['session_token']
 #     return json.dumps(response)
 
-@app.route('/api/get_timeseries_dataset_names', methods=['POST'])
+@app.route('/api/get_timeseries_names', methods=['POST'])
 def sessionp():
     print(request.method)
     print(request.headers)
     print(request.data)
     print('its a post!')
     data = json.loads(request.data.decode("utf-8"))
-    import blackfynn
+    from blackfynn import Blackfynn
     global bf
-    bf = blackfynn.Blackfynn(api_token=data['tokenId'], api_secret=data['secret'])
+    bf = Blackfynn(api_token=data['tokenId'], api_secret=data['secret'])
     data_sets = bf.datasets()
 
     global time_series_items
@@ -60,7 +62,7 @@ def sessionp():
                 time_series_items.append(item)
                 time_series_names.append(item.name)
 
-    return json.dumps({'time_series_names': time_series_names})
+    return json.dumps({'names': time_series_names})
 
 
 @app.route('/api/get_channel_data', methods=['GET'])
